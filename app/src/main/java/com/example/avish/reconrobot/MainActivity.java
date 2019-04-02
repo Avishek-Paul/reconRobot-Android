@@ -1,7 +1,6 @@
 package com.example.avish.reconrobot;
 
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,17 +10,11 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
 
     EditText editTextAddress, editTextPort;
     String lastMessage = "";
-
-    private Uri uri;
-    private boolean isContinuously = false;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
