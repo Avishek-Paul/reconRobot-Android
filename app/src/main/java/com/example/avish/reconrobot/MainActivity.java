@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
     }
 
     public void streamVideo(View view){
-        String liveStream = "http://192.168.0.101:8080/stream";
-
+        String liveStream = "http://" + editTextAddress.getText().toString() + ":8080/stream";//"http://192.168.0.101:8080/stream";
+        Log.d("Stream", liveStream);
         final WebView webView = (WebView)findViewById(R.id.vv);
         webView.setInitialScale(100);
         int width = webView.getWidth();
