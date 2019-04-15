@@ -1,5 +1,6 @@
 package com.example.avish.reconrobot;
 
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,14 +16,34 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
     EditText editTextAddress, editTextPort;
     String lastMessage = "";
+    String dstAddress;
+    int dstPort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextAddress = findViewById(R.id.address);
-        editTextPort = findViewById(R.id.port);
+//        editTextAddress = findViewById(R.id.address);
+//        editTextPort = findViewById(R.id.port);
+
+        Intent intent = getIntent();
+        String streamAddress = intent.getStringExtra("Address");
+        String portNumber = intent.getStringExtra("Port");
+
+        String liveStream = "http://" + streamAddress + ":8080/stream";//"http://192.168.0.101:8080/stream";
+        Log.d("Main_stream", liveStream);
+        Log.d("Main_Port", portNumber);
+
+        dstPort = Integer.parseInt(portNumber);
+        dstAddress = streamAddress;
+
+        final WebView webView = (WebView)findViewById(R.id.vv);
+        webView.setInitialScale(100);
+        int width = webView.getWidth();
+        int height = webView.getHeight();
+        webView.loadUrl(liveStream);// + "?width="+width/2+"&height="+height/2);
+
 
         //allows the background of the joystick to be transparent without black background
         SurfaceView joystick = findViewById(R.id.joystickRight);
@@ -31,15 +52,15 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         joystickHolder.setFormat(PixelFormat.TRANSPARENT);
     }
 
-    public void streamVideo(View view){
-        String liveStream = "http://" + editTextAddress.getText().toString() + ":8080/stream";//"http://192.168.0.101:8080/stream";
-        Log.d("Stream", liveStream);
-        final WebView webView = (WebView)findViewById(R.id.vv);
-        webView.setInitialScale(100);
-        int width = webView.getWidth();
-        int height = webView.getHeight();
-        webView.loadUrl(liveStream + "?width="+width+"&height="+height);
-    }
+//    public void streamVideo(View view){
+//        String liveStream = "http://" + editTextAddress.getText().toString() + ":8080/stream";//"http://192.168.0.101:8080/stream";
+//        Log.d("Stream", liveStream);
+//        final WebView webView = (WebView)findViewById(R.id.vv);
+//        webView.setInitialScale(100);
+//        int width = webView.getWidth();
+//        int height = webView.getHeight();
+//        webView.loadUrl(liveStream + "?width="+width+"&height="+height);
+//    }
 
     @Override
     public void onJoystickMoved(float xPercent, float yPercent, int id) {
@@ -80,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         }
 
         if (message != this.lastMessage){
-            String dstAddress = editTextAddress.getText().toString();
-            int dstPort = Integer.parseInt(editTextPort.getText().toString());
+//            String dstAddress = editTextAddress.getText().toString();
+//            int dstPort = Integer.parseInt(editTextPort.getText().toString());
 
             UdpThread udpThread = new UdpThread(dstAddress, dstPort, message);
             udpThread.start();

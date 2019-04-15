@@ -8,26 +8,26 @@
     android:orientation="vertical"
     tools:context="com.example.avish.reconrobot.MainActivity">
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="192.168.0.100"
-        android:hint="dstAddress" />
-    <EditText
-        android:id="@+id/port"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="5050"
-        android:hint="dstPort" />
+    <!--<EditText-->
+        <!--android:id="@+id/address"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="192.168.0.100"-->
+        <!--android:hint="dstAddress" />-->
+    <!--<EditText-->
+        <!--android:id="@+id/port"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="5050"-->
+        <!--android:hint="dstPort" />-->
 
-    <Button
-        android:id="@+id/btnonce"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:onClick="streamVideo"
-        android:text="Start Stream" />
+    <!--<Button-->
+        <!--android:id="@+id/btnonce"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="0"-->
+        <!--android:onClick="streamVideo"-->
+        <!--android:text="Start Stream" />-->
 
     <WebView
         android:id="@+id/vv"
