@@ -8,13 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
-import android.widget.EditText;
+
 
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
 
-    EditText editTextAddress, editTextPort;
     String lastMessage = "";
     String dstAddress;
     int dstPort;
@@ -22,10 +22,12 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-//        editTextAddress = findViewById(R.id.address);
-//        editTextPort = findViewById(R.id.port);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
         String streamAddress = intent.getStringExtra("Address");
@@ -39,10 +41,13 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         dstAddress = streamAddress;
 
         final WebView webView = (WebView)findViewById(R.id.vv);
-        webView.setInitialScale(100);
+//        webView.setInitialScale(100);
         int width = webView.getWidth();
         int height = webView.getHeight();
-        webView.loadUrl(liveStream);// + "?width="+width/2+"&height="+height/2);
+        Log.d("width", String.valueOf(width));
+        Log.d("height", String.valueOf(height));
+        webView.loadUrl(liveStream);// + "?width="+width+"&height="+height);
+        Log.d("Main_Livestream", liveStream+ "?width="+width+"&height="+height);
 
 
         //allows the background of the joystick to be transparent without black background
@@ -101,8 +106,6 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         }
 
         if (message != this.lastMessage){
-//            String dstAddress = editTextAddress.getText().toString();
-//            int dstPort = Integer.parseInt(editTextPort.getText().toString());
 
             UdpThread udpThread = new UdpThread(dstAddress, dstPort, message);
             udpThread.start();
