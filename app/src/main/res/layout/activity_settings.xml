@@ -19,6 +19,18 @@
         android:layout_height="wrap_content"
         android:text="5050"/>
 
+    <EditText
+        android:id="@+id/baseDutyCycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="100"/>
+
+    <EditText
+        android:id="@+id/reverseDutyCycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="20"/>
+
     <Button
         android:id="@+id/btnonce"
         android:layout_width="match_parent"
