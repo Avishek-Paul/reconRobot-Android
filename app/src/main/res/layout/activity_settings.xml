@@ -19,17 +19,43 @@
         android:layout_height="wrap_content"
         android:text="5050"/>
 
-    <EditText
-        android:id="@+id/baseDutyCycle"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="100"/>
+        android:text="Forward Speed Setting" />
 
-    <EditText
-        android:id="@+id/reverseDutyCycle"
+    <SeekBar
+        android:id="@+id/baseDutyCycle"
+        android:max="85"
+        android:progress="50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="20"/>
+        android:text="Turn/Reverse Speed Setting" />
+
+    <SeekBar
+        android:id="@+id/reverseDutyCycle"
+        android:max="85"
+        android:progress="20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--<EditText-->
+        <!--android:id="@+id/baseDutyCycle"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="100"/>-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/reverseDutyCycle"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="20"/>-->
 
     <Button
         android:id="@+id/btnonce"
