@@ -6,30 +6,68 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    EditText editTextAddress, editTextPort, editBaseDutyCycle, editReverseDutyCycle;
+    EditText editTextAddress, editTextPort;
+    SeekBar seekBaseDutyCycle, seekReverseDutyCycle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        seekBaseDutyCycle = findViewById(R.id.baseDutyCycle);
+        seekReverseDutyCycle = findViewById(R.id.reverseDutyCycle);
+
+        seekBaseDutyCycle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                TextView textView = findViewById(R.id.bdcText);
+                String text = "Forward Speed Setting: " + progress +"%";
+                textView.setText(text);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        seekReverseDutyCycle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                TextView textView = findViewById(R.id.rdcText);
+                String text = "Turn/Reverse Speed Setting: " + progress +"%";
+                textView.setText(text);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
     }
 
-    public void streamVideo(View view){
+    public void streamVideo(View view) {
 
         editTextAddress = findViewById(R.id.address);
         editTextPort = findViewById(R.id.port);
 
-        SeekBar seekBaseDutyCycle = findViewById(R.id.baseDutyCycle);
-        SeekBar seekReverseDutyCycle = findViewById(R.id.reverseDutyCycle);
-
-//        editBaseDutyCycle = findViewById(R.id.baseDutyCycle);
-//        editReverseDutyCycle = findViewById(R.id.reverseDutyCycle);
-
-        String baseDutyCycle = "bdc=" + seekBaseDutyCycle.getProgress();//editBaseDutyCycle.getText().toString();
-        String reverseDutyCycle = "rdc=" + seekReverseDutyCycle.getProgress();//editReverseDutyCycle.getText().toString();
+        String baseDutyCycle = "bdc=" + seekBaseDutyCycle.getProgress();
+        String reverseDutyCycle = "rdc=" + seekReverseDutyCycle.getProgress();
 
         UdpThread bdcThread = new UdpThread(editTextAddress.getText().toString(), Integer.parseInt(editTextPort.getText().toString()), baseDutyCycle);
         bdcThread.start();
@@ -44,5 +82,4 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra("Port", editTextPort.getText().toString());
         startActivity(intent);
     }
-
 }
