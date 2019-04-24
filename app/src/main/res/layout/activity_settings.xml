@@ -27,7 +27,7 @@
 
     <SeekBar
         android:id="@+id/baseDutyCycle"
-        android:max="85"
+        android:max="100"
         android:progress="50"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -40,7 +40,7 @@
 
     <SeekBar
         android:id="@+id/reverseDutyCycle"
-        android:max="85"
+        android:max="100"
         android:progress="20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

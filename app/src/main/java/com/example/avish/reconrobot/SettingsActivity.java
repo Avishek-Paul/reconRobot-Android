@@ -3,6 +3,7 @@ package com.example.avish.reconrobot;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -66,8 +67,13 @@ public class SettingsActivity extends AppCompatActivity {
         editTextAddress = findViewById(R.id.address);
         editTextPort = findViewById(R.id.port);
 
-        String baseDutyCycle = "bdc=" + seekBaseDutyCycle.getProgress();
-        String reverseDutyCycle = "rdc=" + seekReverseDutyCycle.getProgress();
+        int p1 = Math.round(85 * (seekBaseDutyCycle.getProgress()/ (float) 100));
+        int p2 = Math.round(85 * (seekReverseDutyCycle.getProgress()/ (float) 100));
+
+        String baseDutyCycle = "bdc=" + p1;
+        String reverseDutyCycle = "rdc=" + p2;
+
+        Log.d("map", baseDutyCycle + " " + reverseDutyCycle);
 
         UdpThread bdcThread = new UdpThread(editTextAddress.getText().toString(), Integer.parseInt(editTextPort.getText().toString()), baseDutyCycle);
         bdcThread.start();
@@ -82,4 +88,5 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra("Port", editTextPort.getText().toString());
         startActivity(intent);
     }
+
 }
