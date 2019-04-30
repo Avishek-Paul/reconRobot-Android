@@ -20,8 +20,12 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
     String lastMessage = "";
     String dstAddress;
     int dstPort;
+
     boolean flipped = false;
     boolean lightsOn = false;
+
+    String message = "";
+    UdpThread cmdThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         joystickLeft.setZOrderOnTop(true);
         SurfaceHolder joystickHolderLeft = joystickLeft.getHolder();
         joystickHolderLeft.setFormat(PixelFormat.TRANSPARENT);
+
+
+        cmdThread = new UdpThread(dstAddress, dstPort, message);
+        cmdThread.start();
 
     } //ends the onCreate method
 
@@ -141,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
         Log.d("Angle: ",  Double.toString(angle));
 
-        String message = "";
 
         if(!active){
             message = "stop";
@@ -174,10 +181,10 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
         if (message != this.lastMessage){
 
-            UdpThread udpThread = new UdpThread(dstAddress, dstPort, message);
-            udpThread.start();
-            udpThread.interrupt();
-
+//            UdpThread udpThread = new UdpThread(dstAddress, dstPort, message);
+//            udpThread.start();
+//            udpThread.interrupt();
+            cmdThread.update_message(message);
             this.lastMessage = message;
         }
 
