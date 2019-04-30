@@ -75,13 +75,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         Log.d("map", baseDutyCycle + " " + reverseDutyCycle);
 
-        UdpThread bdcThread = new UdpThread(editTextAddress.getText().toString(), Integer.parseInt(editTextPort.getText().toString()), baseDutyCycle);
-        bdcThread.start();
-        bdcThread.interrupt();
 
-        UdpThread rdcThread = new UdpThread(editTextAddress.getText().toString(), Integer.parseInt(editTextPort.getText().toString()), reverseDutyCycle);
-        rdcThread.start();
-        rdcThread.interrupt();
+        UdpThread cmdThread = new UdpThread(editTextAddress.getText().toString(), Integer.parseInt(editTextPort.getText().toString()));
+        cmdThread.start();
+
+        cmdThread.addMessage(baseDutyCycle);
+        cmdThread.addMessage(reverseDutyCycle);
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("Address", editTextAddress.getText().toString());

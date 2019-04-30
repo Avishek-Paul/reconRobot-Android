@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         joystickHolderLeft.setFormat(PixelFormat.TRANSPARENT);
 
 
-        cmdThread = new UdpThread(dstAddress, dstPort, message);
+        cmdThread = new UdpThread(dstAddress, dstPort);
         cmdThread.start();
 
     } //ends the onCreate method
@@ -93,9 +93,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
             lightSwitchRight.setImageResource(R.drawable.light_on_icon);
 
         }
-        UdpThread udpThread = new UdpThread(dstAddress, dstPort, message);
-        udpThread.start();
-        udpThread.interrupt();
+        cmdThread.addMessage(message);
     }
 
     public void flipCamera(View view){
@@ -180,11 +178,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         }
 
         if (message != this.lastMessage){
-
-//            UdpThread udpThread = new UdpThread(dstAddress, dstPort, message);
-//            udpThread.start();
-//            udpThread.interrupt();
-            cmdThread.update_message(message);
+            cmdThread.addMessage(message);
             this.lastMessage = message;
         }
 

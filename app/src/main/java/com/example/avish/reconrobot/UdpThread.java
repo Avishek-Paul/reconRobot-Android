@@ -8,6 +8,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class UdpThread extends Thread{
 
@@ -16,14 +17,14 @@ public class UdpThread extends Thread{
 
     String addr;
     int port;
-    String message;
+
+    ArrayList<String> commandList = new ArrayList<>();
 
     boolean isRunning = false; //enables the thread to continously run in the background
 
-    public UdpThread(String addr, int port, String message){
+    public UdpThread(String addr, int port){
         this.addr = addr;
         this.port = port;
-        this.message = message;
     }
 
     @Override
@@ -36,38 +37,42 @@ public class UdpThread extends Thread{
 
         while (isRunning) {
 
-            if(this.message != null && !this.message.isEmpty()) {
+            if(!commandList.isEmpty()) {
 
                 try {
 
-                    this.serverAddress = InetAddress.getByName(this.addr); //this throws Unknown Host Exception
+                    for(int i = 0; i < commandList.size(); i++){
 
-                    byte[] buf = this.message.getBytes();
-                    DatagramPacket packet = new DatagramPacket(buf, buf.length, this.serverAddress, this.port);
+                        this.serverAddress = InetAddress.getByName(this.addr); //this throws Unknown Host Exception
 
-                    this.socket = new DatagramSocket(); //this throws socketException
-                    this.socket.setBroadcast(false);
-                    Log.i("Message", this.message);
+                        byte[] buf = commandList.get(i).getBytes();
+                        DatagramPacket packet = new DatagramPacket(buf, buf.length, this.serverAddress, this.port);
 
-                    this.socket.send(packet);
-                    this.message = "";
+                        this.socket = new DatagramSocket(); //this throws socketException
+                        this.socket.setBroadcast(false);
+                        Log.i("Message", commandList.get(i));
+
+                        this.socket.send(packet);
+                    }
+
+                    commandList.clear();
 
                 } catch (SocketException e) {
                     Log.e("Udp:", "Socket Error:", e);
-                    this.message = "";
+                    commandList.clear();
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
-                    this.message = "";
+                    commandList.clear();
                 } catch (IOException e) {
                     Log.e("Udp Send:", "IO Error:", e);
-                    this.message = "";
+                    commandList.clear();
                 }
             }
         }
     }
 
-    public void update_message(String message){
-        this.message = message;
+    public void addMessage(String message){
+        this.commandList.add(message);
     }
 
 }
