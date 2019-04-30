@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,12 +12,38 @@
         android:id="@+id/vv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp" >
+    </WebView>
+
+    <ImageView
+        android:id="@+id/flipCameraRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="top|right"
+        android:onClick="flipCamera"
+        app:srcCompat="@drawable/camera_flip_icon" />
+
+    <ImageView
+        android:id="@+id/flipCameraLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|left"
+        android:onClick="flipCamera"
+        android:visibility="invisible"
+        android:rotationX="180"
+        app:srcCompat="@drawable/camera_flip_icon" />
 
     <com.example.avish.reconrobot.JoystickView
         android:id="@+id/joystickRight"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="bottom|right" />
+
+    <com.example.avish.reconrobot.JoystickView
+        android:id="@+id/joystickLeft"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="top|left"
+        android:visibility="invisible"/>
 
 </FrameLayout>

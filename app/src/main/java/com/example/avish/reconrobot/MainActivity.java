@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.ImageView;
 
 
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
     String lastMessage = "";
     String dstAddress;
     int dstPort;
+    boolean flipped = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +54,42 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
 
         //allows the background of the joystick to be transparent without black background
-        SurfaceView joystick = findViewById(R.id.joystickRight);
-        joystick.setZOrderOnTop(true);
-        SurfaceHolder joystickHolder = joystick.getHolder();
-        joystickHolder.setFormat(PixelFormat.TRANSPARENT);
-    }
+        SurfaceView joystickRight = findViewById(R.id.joystickRight);
+        joystickRight.setZOrderOnTop(true);
+        SurfaceHolder joystickHolderRight = joystickRight.getHolder();
+        joystickHolderRight.setFormat(PixelFormat.TRANSPARENT);
 
-//    public void streamVideo(View view){
-//        String liveStream = "http://" + editTextAddress.getText().toString() + ":8080/stream";//"http://192.168.0.101:8080/stream";
-//        Log.d("Stream", liveStream);
-//        final WebView webView = (WebView)findViewById(R.id.vv);
-//        webView.setInitialScale(100);
-//        int width = webView.getWidth();
-//        int height = webView.getHeight();
-//        webView.loadUrl(liveStream + "?width="+width+"&height="+height);
-//    }
+        SurfaceView joystickLeft = findViewById(R.id.joystickLeft);
+        joystickLeft.setZOrderOnTop(true);
+        SurfaceHolder joystickHolderLeft = joystickLeft.getHolder();
+        joystickHolderLeft.setFormat(PixelFormat.TRANSPARENT);
+
+    } //ends the onCreate method
+
+    public void flipCamera(View view){
+        SurfaceView joystickRight = findViewById(R.id.joystickRight);
+        SurfaceView joystickLeft = findViewById(R.id.joystickLeft);
+        ImageView flipCameraLeft = findViewById(R.id.flipCameraLeft);
+        ImageView flipCameraRight = findViewById(R.id.flipCameraRight);
+
+        if (flipped == false) {
+            joystickLeft.setVisibility(View.VISIBLE);
+            flipCameraLeft.setVisibility(View.VISIBLE);
+            joystickRight.setVisibility(View.INVISIBLE);
+            flipCameraRight.setVisibility(View.INVISIBLE);
+            flipped = true;
+        } else {
+            joystickRight.setVisibility(View.VISIBLE);
+            flipCameraRight.setVisibility(View.VISIBLE);
+            joystickLeft.setVisibility(View.INVISIBLE);
+            flipCameraLeft.setVisibility(View.INVISIBLE);
+            flipped = false;
+        }
+    }
 
     @Override
     public void onJoystickMoved(float xPercent, float yPercent, int id) {
-        Log.d("Right Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
+//        Log.d("Right Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
     }
 
     @Override
@@ -103,6 +123,23 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
             message = "down";
         } else{
             message = "right";
+        }
+
+        if(flipped){
+            switch (message){
+                case "up":
+                    message = "down";
+                    break;
+                case "left":
+                    message = "right";
+                    break;
+                case "down":
+                    message = "up";
+                    break;
+                case "right":
+                    message = "left";
+                    break;
+            }
         }
 
         if (message != this.lastMessage){

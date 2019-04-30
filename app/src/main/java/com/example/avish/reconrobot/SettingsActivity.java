@@ -60,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-    }
+    } //ends the onCreate method
 
     public void streamVideo(View view) {
 
