@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
     String dstAddress;
     int dstPort;
     boolean flipped = false;
+    boolean lightsOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,23 +67,52 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
     } //ends the onCreate method
 
+    public void toggleLights(View view){
+        ImageView lightSwitchLeft = findViewById(R.id.lightSwitchLeft);
+        ImageView lightSwitchRight = findViewById(R.id.lightSwitchRight);
+
+        String message;
+        if(!lightsOn){
+            message = "l_on";
+            lightsOn = true;
+            lightSwitchLeft.setImageResource(R.drawable.light_off_icon);
+            lightSwitchRight.setImageResource(R.drawable.light_off_icon);
+
+        } else {
+            message = "l_off";
+            lightsOn = false;
+            lightSwitchLeft.setImageResource(R.drawable.light_on_icon);
+            lightSwitchRight.setImageResource(R.drawable.light_on_icon);
+
+        }
+        UdpThread udpThread = new UdpThread(dstAddress, dstPort, message);
+        udpThread.start();
+        udpThread.interrupt();
+    }
+
     public void flipCamera(View view){
         SurfaceView joystickRight = findViewById(R.id.joystickRight);
         SurfaceView joystickLeft = findViewById(R.id.joystickLeft);
         ImageView flipCameraLeft = findViewById(R.id.flipCameraLeft);
         ImageView flipCameraRight = findViewById(R.id.flipCameraRight);
+        ImageView lightSwitchLeft = findViewById(R.id.lightSwitchLeft);
+        ImageView lightSwitchRight = findViewById(R.id.lightSwitchRight);
 
         if (flipped == false) {
             joystickLeft.setVisibility(View.VISIBLE);
             flipCameraLeft.setVisibility(View.VISIBLE);
+            lightSwitchLeft.setVisibility(View.VISIBLE);
             joystickRight.setVisibility(View.INVISIBLE);
             flipCameraRight.setVisibility(View.INVISIBLE);
+            lightSwitchRight.setVisibility(View.INVISIBLE);
             flipped = true;
         } else {
             joystickRight.setVisibility(View.VISIBLE);
             flipCameraRight.setVisibility(View.VISIBLE);
+            lightSwitchRight.setVisibility(View.VISIBLE);
             joystickLeft.setVisibility(View.INVISIBLE);
             flipCameraLeft.setVisibility(View.INVISIBLE);
+            lightSwitchLeft.setVisibility(View.INVISIBLE);
             flipped = false;
         }
     }

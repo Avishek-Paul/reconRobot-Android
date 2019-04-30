@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp" >
+
     </WebView>
 
     <ImageView
@@ -45,5 +46,26 @@
         android:layout_height="150dp"
         android:layout_gravity="top|left"
         android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/lightSwitchRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="65dp"
+        android:onClick="toggleLights"
+        app:srcCompat="@drawable/light_on_icon" />
+
+
+    <ImageView
+        android:id="@+id/lightSwitchLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="65dp"
+        android:rotationX="180"
+        android:onClick="toggleLights"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/light_on_icon" />
 
 </FrameLayout>
